@@ -8,7 +8,7 @@
     <title>Tic Tac Toe</title>
   </head>
   <body>
-    <main>
+    <main class="hidden">
       <div class="container">
         <div class="header">
           <div class="xo"><span>X</span><span>O</span></div>
@@ -44,7 +44,7 @@
         </div>
       </div>
     </main>
-    <div class="new-game-modal">
+    <div class="new-game-modal hidden">
       <div class="container">
         <div class="xo"><span>X</span><span>O</span></div>
         <form action="">
@@ -60,6 +60,21 @@
           <button>New Game vs Computer</button>
           <button>New Game vs Human</button>
         </div>
+      </div>
+    </div>
+    <div class="restart-modal hidden">
+      <h1>RESTART THE GAME</h1>
+      <div class="buttons">
+        <button class="btn cancel-btn">CANCEL</button>
+        <button class="btn restart-btn">RESTART</button>
+      </div>
+    </div>
+    <div class="winner-modal hidden">
+      <div class="winner-name">Computer win !</div>
+      <div class="winner">X TAKES THE ROUND</div>
+      <div class="buttons">
+        <button class="btn quit">QUIT</button>
+        <button class="btn next-round">NEXT ROUND</button>
       </div>
     </div>
     <script src="script.js"></script>

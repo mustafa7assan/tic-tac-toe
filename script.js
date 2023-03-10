@@ -118,10 +118,13 @@ const GameController = (() => {
   return { playRound, checkNotFill, checkWinner };
 })();
 
-// while (GameController.checkNotFill()) {
-//   GameController.playRound();
-//   if (GameController.checkWinner()) {
-//     console.log("Game is ended");
-//     break;
-//   }
-// }
+const screenController = (() => {
+  const newGameModal = document.querySelector(".new-game-modal");
+  const init = () => {
+    showNewGameModal();
+  };
+  const showNewGameModal = () => {
+    newGameModal.classList.remove("hidden");
+  };
+  return { init };
+})();

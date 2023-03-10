@@ -4,8 +4,11 @@
   box-sizing: border-box;
 }
 :root {
-  --color-one: #f8b334;
-  --color-tow: #30c5bf;
+  --base: #2d4059;
+  --base-light: #324b6b;
+  --color-one: #ffd460;
+  --color-tow: #ea5455;
+  --color-text: #a8bec9;
 }
 html,
 body {
@@ -16,7 +19,8 @@ body {
 body {
   font-size: 16px;
   font-family: sans-serif;
-  background-color: #192a32;
+  background-color: var(--base);
+  position: relative;
 }
 .container {
   width: 80%;
@@ -31,7 +35,6 @@ main {
   height: 100%;
   display: grid;
   place-items: center;
-  display: none;
 }
 main .container {
   padding: 10px;
@@ -51,7 +54,7 @@ main .container {
   gap: 20px;
 }
 .grid > div {
-  background-color: #1f3540;
+  background-color: var(--base-light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,7 +83,7 @@ main .container {
 }
 
 .turn {
-  background-color: #1f3540;
+  background-color: var(--base-light);
   border-radius: 5px;
   padding: 10px 25px;
   font-weight: 600;
@@ -115,7 +118,7 @@ main .container {
   border-radius: 10px;
   padding: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
-  color: rgb(11, 55, 59);
+  color: var(--base);
 }
 .footer > div div:first-child {
   font-size: 14px;
@@ -137,7 +140,7 @@ main .container {
 }
 .new-game-modal {
   height: 100%;
-  display: none;
+  display: grid;
   place-items: center;
 }
 .new-game-modal .xo {
@@ -148,9 +151,9 @@ main .container {
 }
 
 .new-game-modal form {
-  color: #a8bec9;
+  color: var(--color-text);
   font-weight: 600;
-  background-color: #1f3540;
+  background-color: var(--base-light);
   margin-top: 30px;
   padding: 30px;
   border-radius: 10px;
@@ -161,7 +164,7 @@ main .container {
   font-size: 14px;
 }
 .form-raw-mark {
-  background-color: #192a32;
+  background-color: var(--base);
   margin-top: 15px;
   width: 100%;
   display: flex;
@@ -178,7 +181,7 @@ main .container {
 
 .form-raw-mark label {
   flex: 1;
-  color: #a8bec9;
+  color: var(--color-text);
   padding: 10px;
   display: inline-flex;
   align-items: center;
@@ -190,7 +193,7 @@ main .container {
 }
 .form-raw-mark input[type="radio"]:checked + label {
   background-color: #a8bec9;
-  color: #192a32;
+  color: var(--base);
 }
 
 .new-game-modal .buttons {
@@ -203,18 +206,66 @@ main .container {
   border: none;
   padding: 15px 10px;
   font-family: inherit;
-  margin-top: 10px;
+  margin-top: 15px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
   font-weight: 600;
   cursor: pointer;
-  color: #192a32;
+  color: var(--base);
 }
 .new-game-modal .buttons :first-child {
   background-color: var(--color-one);
 }
 .new-game-modal .buttons :last-child {
   background-color: var(--color-tow);
+}
+.restart-modal,
+.winner-modal {
+  background-color: var(--base-light);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px 10px;
+  width: 100%;
+  position: absolute;
+  top: 30%;
+}
+.restart-modal .buttons {
+  margin-top: 20px;
+}
+.btn {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.restart-modal button,
+.winner-modal button {
+  padding: 12px 36px;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-right: 5px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  color: var(--base);
+}
+.restart-modal .buttons button:first-child,
+.winner-modal .buttons button:first-child {
+  background-color: var(--color-one);
+}
+.restart-modal .buttons button:last-child,
+.winner-modal .buttons button:last-child {
+  background-color: var(--color-tow);
+}
+.winner-modal .winner {
+  font-size: 30px;
+  text-align: center;
+  font-weight: 600;
+  margin: 20px 0;
+}
+.hidden {
+  display: none;
 }
 
 @media screen and (max-width: 480px) {

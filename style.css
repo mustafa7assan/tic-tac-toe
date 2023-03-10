@@ -64,12 +64,6 @@ main .container {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
   cursor: pointer;
 }
-.grid div:nth-child(even) {
-  color: var(--color-one);
-}
-.grid div:nth-child(odd) {
-  color: var(--color-tow);
-}
 
 .restart {
   background-color: #aac1cb;
@@ -263,6 +257,15 @@ main .container {
   text-align: center;
   font-weight: 600;
   margin: 20px 0;
+}
+.X {
+  color: var(--color-one);
+}
+.O {
+  color: var(--color-tow);
+}
+.tie {
+  color: var(--color-text);
 }
 .hidden {
   display: none;

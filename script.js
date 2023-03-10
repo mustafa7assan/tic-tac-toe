@@ -118,10 +118,10 @@ const GameController = (() => {
   return { playRound, checkNotFill, checkWinner };
 })();
 
-while (GameController.checkNotFill()) {
-  GameController.playRound();
-  if (GameController.checkWinner()) {
-    console.log("Game is ended");
-    break;
-  }
-}
+// while (GameController.checkNotFill()) {
+//   GameController.playRound();
+//   if (GameController.checkWinner()) {
+//     console.log("Game is ended");
+//     break;
+//   }
+// }

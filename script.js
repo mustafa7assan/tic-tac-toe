@@ -63,14 +63,34 @@ const Score = (() => {
 ///////////////////////// Game Controller ///////////////////////////
 const GameController = (() => {
   let activePlayer, playerOne, playerTow;
-  const init = (playerOneMarker, playerTwoMarker) => {
+  const init = (playerOneMarker, playerTwoMarker, withComputer) => {
     playerOne = Player("player 1", playerOneMarker);
-    playerTow = Player("player 2", playerTwoMarker);
+    if (withComputer) {
+      playerTow = Player("computer", playerTwoMarker);
+    } else {
+      playerTow = Player("player 2", playerTwoMarker);
+    }
     activePlayer = playerOne;
     screenController.changeTurn(activePlayer);
   };
-  const playRound = (index) => {
+  const playRound = async (index) => {
     Gameboard.setValue(index, activePlayer.marker);
+    checkWinOrTie();
+    // switch between players;
+    switchPlayer();
+    // Computer turn
+    if (activePlayer.name === "computer") {
+      let index = getComputerMove();
+      while (!(Gameboard.getValue(index) === "") && !checkTie()) {
+        index = getComputerMove();
+      }
+      Gameboard.setValue(index, activePlayer.marker);
+      checkWinOrTie();
+      switchPlayer();
+    }
+  };
+
+  const checkWinOrTie = () => {
     if (checkWinner()) {
       Score.update(activePlayer);
       screenController.showWinner(activePlayer);
@@ -79,14 +99,14 @@ const GameController = (() => {
       Score.update("tie");
       screenController.showTie();
     }
-    // switch between players;
-    switchPlayer();
   };
 
   const switchPlayer = () => {
     if (activePlayer.name === "player 1") {
       activePlayer = playerTow;
     } else if (activePlayer.name === "player 2") {
+      activePlayer = playerOne;
+    } else if (activePlayer.name === "computer") {
       activePlayer = playerOne;
     }
     screenController.changeTurn(activePlayer);
@@ -135,6 +155,13 @@ const GameController = (() => {
     return !board.some((cell) => cell.value === "");
   };
 
+  const getComputerMove = () => {
+    return Math.floor(Math.random() * 9);
+  };
+
+  const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
   return { playRound, checkWinner, init };
 })();
 
@@ -159,7 +186,9 @@ const screenController = (() => {
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
         if (button.id === "c") {
-          console.log("play with computer");
+          const playerOneMarker = getPlayerOneMarker();
+          const playerTwoMarker = playerOneMarker === "X" ? "O" : "X";
+          GameController.init(playerOneMarker, playerTwoMarker, true);
         } else if (button.id === "h") {
           const playerOneMarker = getPlayerOneMarker();
           const playerTwoMarker = playerOneMarker === "X" ? "O" : "X";
@@ -259,7 +288,7 @@ const screenController = (() => {
     const playerName = winnerModal.querySelector(".winner-name");
     const winner = winnerModal.querySelector(".winner");
     playerName.textContent = "";
-    winner.textContent = `TIE GAME`;
+    winner.textContent = `TIE`;
     listenWinnerModelEvent();
     showScore();
   };
@@ -302,7 +331,7 @@ const screenController = (() => {
     oScore.textContent = Score.getOScore();
     tieScore.textContent = Score.getTiesScore();
   };
-  return { init, showWinner, changeTurn, showTie };
+  return { init, showWinner, changeTurn, showTie, renderGameBoard };
 })();
 
 screenController.init();

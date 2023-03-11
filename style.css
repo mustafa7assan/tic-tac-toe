@@ -257,7 +257,7 @@ main .container {
   text-align: center;
   font-weight: 1000;
   margin: 10px 0;
-  color: var(--color-tow);
+  color: var(--color-text);
 }
 .X {
   color: var(--color-tow);

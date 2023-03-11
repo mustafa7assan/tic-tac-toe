@@ -226,7 +226,7 @@ const screenController = (() => {
     const playerName = winnerModal.querySelector(".winner-name");
     const winner = winnerModal.querySelector(".winner");
     playerName.textContent = `${player.name.toUpperCase()} WIN !`;
-    winner.textContent = `${player.marker} TAKES THE ROUND`;
+    winner.textContent = `${player.marker}`;
     listenWinnerModelEvent();
     showScore();
   };

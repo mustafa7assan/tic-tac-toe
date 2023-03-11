@@ -115,7 +115,7 @@ main .container {
   color: var(--base);
 }
 .footer > div div:first-child {
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 600;
 }
 .footer > div div:last-child {
@@ -253,10 +253,11 @@ main .container {
   background-color: var(--color-tow);
 }
 .winner-modal .winner {
-  font-size: 30px;
+  font-size: 40px;
   text-align: center;
-  font-weight: 600;
-  margin: 20px 0;
+  font-weight: 1000;
+  margin: 10px 0;
+  color: var(--color-tow);
 }
 .X {
   color: var(--color-tow);
@@ -297,6 +298,9 @@ footer a .icon {
 @media screen and (max-width: 480px) {
   .container {
     width: 90%;
+  }
+  .grid {
+    height: 350px;
   }
   .grid > div {
     font-size: 70px;

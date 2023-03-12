@@ -80,22 +80,26 @@ const GameController = (() => {
     switchPlayer();
     // Computer turn
     if (activePlayer.name === "computer") {
-      let index = getComputerMove();
-      while (!(Gameboard.getValue(index) === "") && !checkTie()) {
-        index = getComputerMove();
+      if (!checkTie()) {
+        screenController.blockCells();
+        await sleep(1000);
+        let index = getComputerMove();
+        while (!(Gameboard.getValue(index) === "") && !checkNotFill()) {
+          index = getComputerMove();
+        }
+        Gameboard.setValue(index, activePlayer.marker);
+        screenController.renderGameBoard();
+        checkWinOrTie();
+        switchPlayer();
+        screenController.unBlockCells();
       }
-      Gameboard.setValue(index, activePlayer.marker);
-      checkWinOrTie();
-      switchPlayer();
     }
   };
-
   const checkWinOrTie = () => {
     if (checkWinner()) {
       Score.update(activePlayer);
       screenController.showWinner(activePlayer);
-    }
-    if (checkTie()) {
+    } else if (checkTie()) {
       Score.update("tie");
       screenController.showTie();
     }
@@ -162,7 +166,16 @@ const GameController = (() => {
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
-  return { playRound, checkWinner, init };
+
+  const checkNotFill = () => {
+    const board = Gameboard.getBoard();
+    return !board.some((cell) => cell.value === "");
+  };
+
+  const changeActivePlayer = () => {
+    activePlayer = playerOne;
+  };
+  return { playRound, checkWinner, init, changeActivePlayer };
 })();
 
 ///////////////////////// Screen Controller ///////////////////////////
@@ -211,6 +224,22 @@ const screenController = (() => {
     if (cell.textContent.length === 0) {
       GameController.playRound(cell.id);
       renderGameBoard();
+    }
+  };
+
+  const blockCells = () => {
+    const cells = document.querySelectorAll(".cell");
+    for (let i = 0; i < 9; i++) {
+      const cell = cells[i];
+      cell.classList.add("block");
+    }
+  };
+
+  const unBlockCells = () => {
+    const cells = document.querySelectorAll(".cell");
+    for (let i = 0; i < 9; i++) {
+      const cell = cells[i];
+      cell.classList.remove("block");
     }
   };
 
@@ -269,6 +298,7 @@ const screenController = (() => {
   const nextRound = () => {
     winnerModal.classList.add("hidden");
     Gameboard.resetBoard();
+    GameController.changeActivePlayer();
     renderGameBoard();
     showMainBoard();
   };
@@ -331,7 +361,15 @@ const screenController = (() => {
     oScore.textContent = Score.getOScore();
     tieScore.textContent = Score.getTiesScore();
   };
-  return { init, showWinner, changeTurn, showTie, renderGameBoard };
+  return {
+    init,
+    showWinner,
+    changeTurn,
+    showTie,
+    renderGameBoard,
+    blockCells,
+    unBlockCells,
+  };
 })();
 
 screenController.init();
